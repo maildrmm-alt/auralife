@@ -1,0 +1,2848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraLife Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* ========================================
+           ADMIN DASHBOARD STYLES
+           ======================================== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --sidebar-width: 260px;
+            --sidebar-bg: #1e293b;
+            --sidebar-hover: #334155;
+            --sidebar-active: #0f172a;
+            --header-height: 64px;
+            --teal: #14b8a6;
+            --teal-light: #ccfbf1;
+            --gold: #f59e0b;
+            --gold-light: #fef3c7;
+            --blue: #3b82f6;
+            --blue-light: #dbeafe;
+            --green: #22c55e;
+            --green-light: #dcfce7;
+            --red: #ef4444;
+            --red-light: #fee2e2;
+            --purple: #8b5cf6;
+            --purple-light: #ede9fe;
+            --bg-page: #f1f5f9;
+            --bg-card: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --border-color: #e2e8f0;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+            --transition: 0.2s ease;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-page);
+            color: var(--text-primary);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ========== SIDEBAR ========== */
+        .admin-sidebar {
+            width: var(--sidebar-width);
+            min-height: 100vh;
+            background: var(--sidebar-bg);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-logo {
+            padding: 24px 24px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .sidebar-logo a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .sidebar-logo .logo-icon {
+            font-size: 1.5rem;
+        }
+
+        .sidebar-logo .logo-sub {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.04em;
+            margin-top: 2px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 16px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition);
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .nav-item:hover {
+            background: var(--sidebar-hover);
+            color: #fff;
+        }
+
+        .nav-item.active {
+            background: var(--teal);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(20, 184, 166, 0.3);
+        }
+
+        .nav-item .nav-icon {
+            font-size: 1.15rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            padding: 16px 12px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .sidebar-footer .nav-item {
+            color: #ef4444;
+        }
+
+        .sidebar-footer .nav-item:hover {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        /* Mobile hamburger */
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background: var(--sidebar-bg);
+            z-index: 200;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+        }
+
+        .mobile-header .logo-text {
+            color: #fff;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .hamburger-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: var(--radius-sm);
+        }
+
+        .hamburger-btn:hover {
+            background: var(--sidebar-hover);
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 90;
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        .admin-main {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header bar */
+        .admin-header {
+            height: var(--header-height);
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-title h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .lang-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-page);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: var(--font-family);
+        }
+
+        .lang-toggle:hover {
+            border-color: var(--teal);
+            color: var(--teal);
+        }
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--teal), var(--blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .admin-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .admin-role {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Content area */
+        .admin-content {
+            flex: 1;
+            padding: 28px 32px;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--text-primary);
+        }
+
+        /* ========== STAT CARDS ========== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border-left: 4px solid;
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-card.teal { border-left-color: var(--teal); }
+        .stat-card.gold { border-left-color: var(--gold); }
+        .stat-card.blue { border-left-color: var(--blue); }
+        .stat-card.green { border-left-color: var(--green); }
+
+        .stat-card .stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 14px;
+        }
+
+        .stat-card.teal .stat-icon { background: var(--teal-light); }
+        .stat-card.gold .stat-icon { background: var(--gold-light); }
+        .stat-card.blue .stat-icon { background: var(--blue-light); }
+        .stat-card.green .stat-icon { background: var(--green-light); }
+
+        .stat-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 6px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* ========== TABLES ========== */
+        .table-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .table-card-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .table-card-header h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            padding: 12px 24px;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table td {
+            padding: 14px 24px;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tr:hover td {
+            background: #f8fafc;
+        }
+
+        .data-table .client-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Status badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .badge-new {
+            background: var(--gold-light);
+            color: #b45309;
+        }
+        .badge-new::before { background: var(--gold); }
+
+        .badge-progress {
+            background: var(--blue-light);
+            color: #1d4ed8;
+        }
+        .badge-progress::before { background: var(--blue); }
+
+        .badge-completed {
+            background: var(--green-light);
+            color: #15803d;
+        }
+        .badge-completed::before { background: var(--green); }
+
+        .badge-inactive {
+            background: #f1f5f9;
+            color: var(--text-muted);
+        }
+        .badge-inactive::before { background: var(--text-muted); }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition);
+            border: none;
+            font-family: var(--font-family);
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--teal);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: #0d9488;
+            box-shadow: 0 2px 8px rgba(20,184,166,0.3);
+        }
+
+        .btn-secondary {
+            background: var(--bg-page);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--teal);
+            border: 1px solid var(--teal);
+        }
+        .btn-outline:hover {
+            background: var(--teal-light);
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: #fff;
+        }
+        .btn-gold:hover {
+            background: #d97706;
+        }
+
+        .btn-danger {
+            background: var(--red);
+            color: #fff;
+        }
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-sm {
+            padding: 5px 12px;
+            font-size: 0.78rem;
+        }
+
+        .btn-icon {
+            padding: 6px 10px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* ========== CLIENT REQUESTS VIEW ========== */
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-family: var(--font-family);
+        }
+
+        .filter-tab:hover {
+            border-color: var(--teal);
+            color: var(--teal);
+        }
+
+        .filter-tab.active {
+            background: var(--teal);
+            color: #fff;
+            border-color: var(--teal);
+        }
+
+        .filter-tab .tab-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            margin-left: 6px;
+            padding: 0 6px;
+        }
+
+        .filter-tab:not(.active) .tab-count {
+            background: var(--bg-page);
+            color: var(--text-muted);
+        }
+
+        .filter-tab.active .tab-count {
+            background: rgba(255,255,255,0.25);
+            color: #fff;
+        }
+
+        .request-cards {
+            display: grid;
+            gap: 16px;
+        }
+
+        .request-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            transition: all var(--transition);
+        }
+
+        .request-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--teal);
+        }
+
+        .request-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .request-client-info h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .request-client-contact {
+            display: flex;
+            gap: 16px;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+        }
+
+        .request-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.84rem;
+            color: var(--text-secondary);
+        }
+
+        .meta-item .meta-label {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .request-concern {
+            background: #f8fafc;
+            border-radius: var(--radius-sm);
+            padding: 14px 18px;
+            margin-bottom: 18px;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            border-left: 3px solid var(--teal);
+        }
+
+        .request-card-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* ========== MODAL ========== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 720px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            background: var(--bg-card);
+            z-index: 10;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        }
+
+        .modal-header h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            padding: 4px;
+            line-height: 1;
+            border-radius: var(--radius-sm);
+            transition: all var(--transition);
+        }
+
+        .modal-close:hover {
+            background: var(--bg-page);
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 28px;
+        }
+
+        .modal-footer {
+            padding: 20px 28px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .client-summary {
+            background: #f8fafc;
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .client-summary-item {
+            font-size: 0.85rem;
+        }
+
+        .client-summary-item .summary-label {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 2px;
+        }
+
+        .client-summary-item .summary-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Chakra rows */
+        .chakra-assessment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .chakra-row {
+            display: grid;
+            grid-template-columns: 180px 1fr 1fr;
+            gap: 14px;
+            align-items: start;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .chakra-row:last-child {
+            border-bottom: none;
+        }
+
+        .chakra-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding-top: 8px;
+        }
+
+        .chakra-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            box-shadow: 0 0 6px rgba(0,0,0,0.15);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .form-control {
+            padding: 9px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            font-family: var(--font-family);
+            color: var(--text-primary);
+            background: var(--bg-card);
+            transition: border-color var(--transition);
+            width: 100%;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--teal);
+            box-shadow: 0 0 0 3px rgba(20,184,166,0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        select.form-control {
+            cursor: pointer;
+        }
+
+        /* ========== REPORT BUILDER ========== */
+        .report-builder {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .report-section {
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .report-section:last-child {
+            border-bottom: none;
+        }
+
+        .report-section h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chakra-report-row {
+            display: grid;
+            grid-template-columns: 180px 1fr 1fr;
+            gap: 14px;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .chakra-report-row:last-child {
+            border-bottom: none;
+        }
+
+        .aura-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .report-actions {
+            padding: 24px 28px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        /* ========== PACKAGES ========== */
+        .packages-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .package-form-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: 28px;
+            margin-bottom: 24px;
+            display: none;
+        }
+
+        .package-form-card.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .package-form-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-row-full {
+            margin-bottom: 16px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .toggle-switch input {
+            display: none;
+        }
+
+        .toggle-slider {
+            width: 44px;
+            height: 24px;
+            background: #cbd5e1;
+            border-radius: 12px;
+            position: relative;
+            transition: background var(--transition);
+        }
+
+        .toggle-slider::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform var(--transition);
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background: var(--teal);
+        }
+
+        .toggle-switch input:checked + .toggle-slider::after {
+            transform: translateX(20px);
+        }
+
+        .toggle-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .package-form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* ========== SETTINGS ========== */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        .settings-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: 28px;
+        }
+
+        .settings-card h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .settings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .settings-row:last-child {
+            border-bottom: none;
+        }
+
+        .settings-row-label {
+            font-size: 0.88rem;
+            font-weight: 500;
+        }
+
+        .settings-row-desc {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* ========== TOAST ========== */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            background: var(--sidebar-bg);
+            color: #fff;
+            padding: 14px 20px;
+            border-radius: var(--radius-md);
+            font-size: 0.88rem;
+            font-weight: 500;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideInRight 0.3s ease;
+            min-width: 280px;
+        }
+
+        .toast.success { border-left: 4px solid var(--green); }
+        .toast.error { border-left: 4px solid var(--red); }
+        .toast.info { border-left: 4px solid var(--blue); }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+            }
+
+            .admin-sidebar.open {
+                transform: translateX(0);
+            }
+
+            .mobile-header {
+                display: flex;
+            }
+
+            .sidebar-overlay.show {
+                display: block;
+            }
+
+            .admin-main {
+                margin-left: 0;
+                padding-top: var(--header-height);
+            }
+
+            .admin-header {
+                padding: 0 16px;
+            }
+
+            .admin-content {
+                padding: 20px 16px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+
+            .stat-card {
+                padding: 18px;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+            }
+
+            .data-table {
+                font-size: 0.8rem;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 10px 14px;
+            }
+
+            .chakra-row {
+                grid-template-columns: 1fr;
+            }
+
+            .chakra-report-row {
+                grid-template-columns: 1fr;
+            }
+
+            .aura-row {
+                grid-template-columns: 1fr;
+            }
+
+            .request-card-header {
+                flex-direction: column;
+            }
+
+            .header-title h1 {
+                font-size: 1rem;
+            }
+
+            .admin-profile .admin-name,
+            .admin-profile .admin-role {
+                display: none;
+            }
+
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .modal {
+                max-width: 100%;
+                margin: 0;
+                border-radius: var(--radius-md);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-tabs {
+                gap: 6px;
+            }
+
+            .filter-tab {
+                padding: 6px 14px;
+                font-size: 0.8rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .request-meta {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <span class="logo-text">✨ AuraLife</span>
+        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">☰</button>
+    </div>
+
+    <!-- Sidebar Overlay (mobile) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-logo">
+            <a href="#">
+                <span class="logo-icon">✨</span>
+                <div>
+                    AuraLife
+                    <span class="logo-sub" data-i18n="admin_panel">Admin Panel</span>
+                </div>
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+            <button class="nav-item active" data-section="dashboard">
+                <span class="nav-icon">📊</span>
+                <span data-i18n="nav_dashboard">Dashboard</span>
+            </button>
+            <button class="nav-item" data-section="requests">
+                <span class="nav-icon">📋</span>
+                <span data-i18n="nav_client_requests">Client Requests</span>
+            </button>
+            <button class="nav-item" data-section="reports">
+                <span class="nav-icon">📝</span>
+                <span data-i18n="nav_reports">Reports</span>
+            </button>
+            <button class="nav-item" data-section="packages">
+                <span class="nav-icon">💰</span>
+                <span data-i18n="nav_packages">Packages &amp; Pricing</span>
+            </button>
+            <button class="nav-item" data-section="settings">
+                <span class="nav-icon">⚙️</span>
+                <span data-i18n="nav_settings">Settings</span>
+            </button>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="nav-item" id="logoutBtn">
+                <span class="nav-icon">🚪</span>
+                <span data-i18n="nav_logout">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="header-title">
+                <h1 data-i18n="header_dashboard" id="headerTitle">Dashboard</h1>
+            </div>
+            <div class="header-actions">
+                <a href="index.html" class="btn btn-outline btn-sm" style="margin-right: 0.5rem; text-decoration: none;">← Client Website</a>
+                <button class="lang-toggle" id="langToggle" title="Toggle Language">
+                    🌐 <span id="langLabel">EN</span>
+                </button>
+                <div class="admin-profile">
+                    <div class="admin-avatar">AK</div>
+                    <div>
+                        <div class="admin-name" data-i18n="admin_name">Arun Kumar</div>
+                        <div class="admin-role" data-i18n="admin_role_label">Energy Therapist</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content Area -->
+        <div class="admin-content">
+
+            <!-- ============ DASHBOARD SECTION ============ -->
+            <section class="content-section active" id="section-dashboard">
+                <h2 class="section-title" data-i18n="dashboard_overview">Overview</h2>
+
+                <!-- Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card teal">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-label" data-i18n="stat_total_clients">Total Clients</div>
+                        <div class="stat-value" id="statTotalClients">5</div>
+                    </div>
+                    <div class="stat-card gold">
+                        <div class="stat-icon">🔔</div>
+                        <div class="stat-label" data-i18n="stat_new_requests">New Requests</div>
+                        <div class="stat-value" id="statNewRequests">2</div>
+                    </div>
+                    <div class="stat-card blue">
+                        <div class="stat-icon">⏳</div>
+                        <div class="stat-label" data-i18n="stat_in_progress">In Progress</div>
+                        <div class="stat-value" id="statInProgress">2</div>
+                    </div>
+                    <div class="stat-card green">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-label" data-i18n="stat_completed">Completed</div>
+                        <div class="stat-value" id="statCompleted">1</div>
+                    </div>
+                </div>
+
+                <!-- Recent Requests Table -->
+                <div class="table-card">
+                    <div class="table-card-header">
+                        <h3 data-i18n="recent_requests">Recent Requests</h3>
+                        <button class="btn btn-outline btn-sm" id="viewAllRequests" data-i18n="view_all">View All</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="th_client_name">Client Name</th>
+                                    <th data-i18n="th_service_type">Service Type</th>
+                                    <th data-i18n="th_booking_for">Booking For</th>
+                                    <th data-i18n="th_date">Date</th>
+                                    <th data-i18n="th_status">Status</th>
+                                    <th data-i18n="th_actions">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentRequestsBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============ CLIENT REQUESTS SECTION ============ -->
+            <section class="content-section" id="section-requests">
+                <h2 class="section-title" data-i18n="client_requests_title">Client Requests</h2>
+
+                <!-- Filter Tabs -->
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">
+                        <span data-i18n="filter_all">All</span><span class="tab-count">5</span>
+                    </button>
+                    <button class="filter-tab" data-filter="new">
+                        <span data-i18n="filter_new">New</span><span class="tab-count">2</span>
+                    </button>
+                    <button class="filter-tab" data-filter="in-progress">
+                        <span data-i18n="filter_in_progress">In Progress</span><span class="tab-count">2</span>
+                    </button>
+                    <button class="filter-tab" data-filter="completed">
+                        <span data-i18n="filter_completed">Completed</span><span class="tab-count">1</span>
+                    </button>
+                </div>
+
+                <!-- Request Cards -->
+                <div class="request-cards" id="requestCards">
+                    <!-- Card 1: Karthik R. -->
+                    <div class="request-card" data-status="new">
+                        <div class="request-card-header">
+                            <div class="request-client-info">
+                                <h4>Karthik R.</h4>
+                                <div class="request-client-contact">
+                                    <span>📞 +91 98765 43210</span>
+                                    <span>✉️ karthik.r@email.com</span>
+                                </div>
+                            </div>
+                            <span class="badge badge-new" data-i18n="status_new">New</span>
+                        </div>
+                        <div class="request-meta">
+                            <div class="meta-item">
+                                <span class="meta-label" data-i18n="meta_service">Service:</span>
+                                <span data-i18n="service_mental_healing">Mental Healing</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label" data-i18n="meta_booking_for">Booking For:</span>
+                                <span data-i18n="booking_self">Self</span>
+                            </div>
+                        </div>
+                        <div class="request-concern">
+                            Severe work anxiety and sleeplessness for 3 months
+                        </div>
+                        <div class="request-card-actions">
+                            <button class="btn btn-secondary btn-sm" data-i18n="btn_view_details">View Details</button>
+                            <button class="btn btn-primary btn-sm" data-i18n="btn_start_consultation">Start Consultation</button>
+                            <button class="btn btn-gold btn-sm btn-assess-chakra" data-client="Karthik R." data-service="Mental Healing" data-i18n="btn_assess_chakras">Assess Chakras</button>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Priya M. -->
+                    <div class="request-card" data-status="in-progress">
+                        <div class="request-card-header">
+                            <div class="request-client-info">
+                                <h4>Priya M.</h4>
+                                <div class="request-client-contact">
+                                    <span>📞 +91 87654 32109</span>
+                                    <span>✉️ priya.m@email.com</span>
+                                </div>
+                            </div>
+                            <span class="badge badge-progress" data-i18n="status_in_progress">In Progress</span>
+                        </div>
+                        <div class="request-meta">
+                            <div class="meta-item">
+                                <span class="meta-label" data-i18n="meta_service">Service:</span>
+                                <span data-i18n="service_remote_family">Remote Family Care</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label" data-i18n="meta_booking_for">Booking For:</span>
+                                <span data-i18n="booking_family">Family (Parents)</span>
+                            </div>
+                        </div>
+                        <div class="request-concern">
+                            My parents (age 68 &amp; 65) have joint pain and BP issues
+                        </div>
+                        <div class="request-card-actions">
+                            <button class="btn btn-secondary btn-sm" data-i18n="btn_view_details">View Details</button>
+                            <button class="btn btn-primary btn-sm" data-i18n="btn_start_consultation">Start Consultation</button>
+                            <button class="btn btn-gold btn-sm btn-assess-chakra" data-client="Priya M." data-service="Remote Family Care" data-i18n="btn_assess_chakras">Assess Chakras</button>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Suresh K. -->
+                    <div class="request-card" data-status="completed">
+                        <div class="request-card-header">
+                            <div class="request-client-info">
+                                <h4>Suresh K.</h4>
+                                <div class="request-client-contact">
+                                    <span>📞 +91 76543 21098</span>
+                                    <span>✉️ suresh.k@email.com</span>
+                                </div>
+                            </div>
+                            <span class="badge badge-completed" data-i18n="status_completed">Completed</span>
+                        </div>
+                        <div class="request-meta">
+                            <div class="meta-item">
+                                <span class="meta-label" data-i18n="meta_service">Service:</span>
+                                <span data-i18n="service_life_mileage">Life Mileage Maintenance</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label" data-i18n="meta_booking_for">Booking For:</span>
+                                <span data-i18n="booking_self">Self</span>
+                            </div>
+                        </div>
+                        <div class="request-concern">
+                            Regular energy maintenance - IT professional, general fatigue
+                        </div>
+                        <div class="request-card-actions">
+                            <button class="btn btn-secondary btn-sm" data-i18n="btn_view_details">View Details</button>
+                            <button class="btn btn-primary btn-sm" data-i18n="btn_start_consultation">Start Consultation</button>
+                            <button class="btn btn-gold btn-sm btn-assess-chakra" data-client="Suresh K." data-service="Life Mileage Maintenance" data-i18n="btn_assess_chakras">Assess Chakras</button>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Meena S. -->
+                    <div class="request-card" data-status="new">
+                        <div class="request-card-header">
+                            <div class="request-client-info">
+                                <h4>Meena S.</h4>
+                                <div class="request-client-contact">
+                                    <span>📞 +91 65432 10987</span>
+                                    <span>✉️ meena.s@email.com</span>
+                                </div>
+                            </div>
+                            <span class="badge badge-new" data-i18n="status_new">New</span>
+                        </div>
+                        <div class="request-meta">
+                            <div class="meta-item">
+                                <span class="meta-label" data-i18n="meta_service">Service:</span>
+                                <span data-i18n="service_physical_wellness">Physical Wellness</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label" data-i18n="meta_booking_for">Booking For:</span>
+                                <span data-i18n="booking_self">Self</span>
+                            </div>
+                        </div>
+                        <div class="request-concern">
+                            நாள்பட்ட முதுகு வலி மற்றும் மூட்டு வலி
+                        </div>
+                        <div class="request-card-actions">
+                            <button class="btn btn-secondary btn-sm" data-i18n="btn_view_details">View Details</button>
+                            <button class="btn btn-primary btn-sm" data-i18n="btn_start_consultation">Start Consultation</button>
+                            <button class="btn btn-gold btn-sm btn-assess-chakra" data-client="Meena S." data-service="Physical Wellness" data-i18n="btn_assess_chakras">Assess Chakras</button>
+                        </div>
+                    </div>
+
+                    <!-- Card 5: Ravi N. -->
+                    <div class="request-card" data-status="in-progress">
+                        <div class="request-card-header">
+                            <div class="request-client-info">
+                                <h4>Ravi N.</h4>
+                                <div class="request-client-contact">
+                                    <span>📞 +91 54321 09876</span>
+                                    <span>✉️ ravi.n@email.com</span>
+                                </div>
+                            </div>
+                            <span class="badge badge-progress" data-i18n="status_in_progress">In Progress</span>
+                        </div>
+                        <div class="request-meta">
+                            <div class="meta-item">
+                                <span class="meta-label" data-i18n="meta_service">Service:</span>
+                                <span data-i18n="service_prosperity">Prosperity</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label" data-i18n="meta_booking_for">Booking For:</span>
+                                <span data-i18n="booking_self">Self</span>
+                            </div>
+                        </div>
+                        <div class="request-concern">
+                            Career stagnation for 2 years, need energy clearing
+                        </div>
+                        <div class="request-card-actions">
+                            <button class="btn btn-secondary btn-sm" data-i18n="btn_view_details">View Details</button>
+                            <button class="btn btn-primary btn-sm" data-i18n="btn_start_consultation">Start Consultation</button>
+                            <button class="btn btn-gold btn-sm btn-assess-chakra" data-client="Ravi N." data-service="Prosperity" data-i18n="btn_assess_chakras">Assess Chakras</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============ REPORTS SECTION ============ -->
+            <section class="content-section" id="section-reports">
+                <h2 class="section-title" data-i18n="reports_title">Before &amp; After Report Builder</h2>
+
+                <div class="report-builder">
+                    <!-- Client Selection -->
+                    <div class="report-section">
+                        <h3>📋 <span data-i18n="report_select_client">Select Client</span></h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label data-i18n="report_client_label">Client</label>
+                                <select class="form-control" id="reportClientSelect">
+                                    <option value="" data-i18n="report_select_placeholder">-- Select a Client --</option>
+                                    <option value="karthik">Karthik R. — Mental Healing</option>
+                                    <option value="priya">Priya M. — Remote Family Care</option>
+                                    <option value="suresh">Suresh K. — Life Mileage Maintenance</option>
+                                    <option value="meena">Meena S. — Physical Wellness</option>
+                                    <option value="ravi">Ravi N. — Prosperity</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chakra Before/After -->
+                    <div class="report-section">
+                        <h3>🔮 <span data-i18n="report_chakra_assessment">Chakra Assessment</span></h3>
+
+                        <div class="chakra-report-row">
+                            <div class="chakra-name">
+                                <span class="chakra-dot" style="background:#e11d48;"></span>
+                                <span data-i18n="chakra_root">Root (Muladhara)</span>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="report_before">Before</label>
+                                <select class="form-control">
+                                    <option value="normal" data-i18n="chakra_normal">Normal</option>
+                                    <option value="congested" data-i18n="chakra_congested" selected>Congested</option>
+                                    <option value="depleted" data-i18n="chakra_depleted">Depleted</option>
+                                    <option value="over-activated" data-i18n="chakra_over_activated">Over-activated</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="report_after">After</label>
+                                <select class="form-control">
+                                    <option value="" data-i18n="report_select_status">-- Select --</option>
+                                    <option value="balanced" data-i18n="chakra_balanced">Balanced</option>
+                                    <option value="energized" data-i18n="chakra_energized">Energized</option>
+                                    <option value="harmonized" data-i18n="chakra_harmonized">Harmonized</option>
+                                    <option value="improved" data-i18n="chakra_improved">Improved</option>
+                                    <option value="needs-attention" data-i18n="chakra_needs_attention">Needs Further Attention</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="chakra-report-row">
+                            <div class="chakra-name">
+                                <span class="chakra-dot" style="background:#f97316;"></span>
+                                <span data-i18n="chakra_sacral">Sacral (Svadhisthana)</span>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="report_before">Before</label>
+                                <select class="form-control">
+                                    <option value="normal" data-i18n="chakra_normal" selected>Normal</option>
+                                    <option value="congested" data-i18n="chakra_congested">Congested</option>
+                                    <option value="depleted" data-i18n="chakra_depleted">Depleted</option>
+                                    <option value="over-activated" data-i18n="chakra_over_activated">Over-activated</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="report_after">After</label>
+                                <select class="form-control">
+                                    <option value="" data-i18n="report_select_status">-- Select --</option>
+                                    <option value="balanced" data-i18n="chakra_balanced">Balanced</option>
+                                    <option value="energized" data-i18n="chakra_energized">Energized</option>
+                                    <option value="harmonized" data-i18n="chakra_harmonized">Harmonized</option>
+                                    <option value="improved" data-i18n="chakra_improved">Improved</option>
+                                    <option value="needs-attention" data-i18n="chakra_needs_attention">Needs Further Attention</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="chakra-report-row">
+                            <div class="chakra-name">
+                                <span class="chakra-dot" style="background:#eab308;"></span>
+                                <span data-i18n="chakra_solar">Solar Plexus (Manipura)</span>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="report_before">Before</label>
+                                <select class="form-control">
+                                    <option value="normal" data-i18n="chakra_normal">Normal</option>
+                                    <option value="congested" data-i18n="chakra_congested">Congested</option>
+                                    <option value="depleted" data-i18n="chakra_depleted" selected>Depleted</option>
+                                    <option value="over-activated" data-i18n="chakra_over_activated">Over-activated</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="report_after">After</label>
+                                <select class="form-control">
+                                    <option value="" data-i18n="report_select_status">-- Select --</option>
+                                    <option value="balanced" data-i18n="chakra_balanced">Balanced</option>
+                                    <option value="energized" data-i18n="chakra_energized">Energized</option>
+                                    <option value="harmonized" data-i18n="chakra_harmonized">Harmonized</option>
+                                    <option value="improved" data-i18n="chakra_improved">Improved</option>
+                                    <option value="needs-attention" data-i18n="chakra_needs_attention">Needs Further Attention</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="chakra-report-row">
+                            <div class="chakra-name">
+                                <span class="chakra-dot" style="background:#22c55e;"></span>
+                                <span data-i18n="chakra_heart">Heart (Anahata)</span>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="report_before">Before</label>
+                                <select class="form-control">
+                                    <option value="normal" data-i18n="chakra_normal">Normal</option>
+                                    <option value="congested" data-i18n="chakra_congested">Congested</option>
+                                    <option value="depleted" data-i18n="chakra_depleted">Depleted</option>
+                                    <option value="over-activated" data-i18n="chakra_over_activated" selected>Over-activated</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="report_after">After</label>
+                                <select class="form-control">
+                                    <option value="" data-i18n="report_select_status">-- Select --</option>
+                                    <option value="balanced" data-i18n="chakra_balanced">Balanced</option>
+                                    <option value="energized" data-i18n="chakra_energized">Energized</option>
+                                    <option value="harmonized" data-i18n="chakra_harmonized">Harmonized</option>
+                                    <option value="improved" data-i18n="chakra_improved">Improved</option>
+                                    <option value="needs-attention" data-i18n="chakra_needs_attention">Needs Further Attention</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="chakra-report-row">
+                            <div class="chakra-name">
+                                <span class="chakra-dot" style="background:#06b6d4;"></span>
+                                <span data-i18n="chakra_throat">Throat (Vishuddha)</span>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="report_before">Before</label>
+                                <select class="form-control">
+                                    <option value="normal" data-i18n="chakra_normal" selected>Normal</option>
+                                    <option value="congested" data-i18n="chakra_congested">Congested</option>
+                                    <option value="depleted" data-i18n="chakra_depleted">Depleted</option>
+                                    <option value="over-activated" data-i18n="chakra_over_activated">Over-activated</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="report_after">After</label>
+                                <select class="form-control">
+                                    <option value="" data-i18n="report_select_status">-- Select --</option>
+                                    <option value="balanced" data-i18n="chakra_balanced">Balanced</option>
+                                    <option value="energized" data-i18n="chakra_energized">Energized</option>
+                                    <option value="harmonized" data-i18n="chakra_harmonized">Harmonized</option>
+                                    <option value="improved" data-i18n="chakra_improved">Improved</option>
+                                    <option value="needs-attention" data-i18n="chakra_needs_attention">Needs Further Attention</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="chakra-report-row">
+                            <div class="chakra-name">
+                                <span class="chakra-dot" style="background:#6366f1;"></span>
+                                <span data-i18n="chakra_third_eye">Third Eye (Ajna)</span>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="report_before">Before</label>
+                                <select class="form-control">
+                                    <option value="normal" data-i18n="chakra_normal">Normal</option>
+                                    <option value="congested" data-i18n="chakra_congested" selected>Congested</option>
+                                    <option value="depleted" data-i18n="chakra_depleted">Depleted</option>
+                                    <option value="over-activated" data-i18n="chakra_over_activated">Over-activated</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="report_after">After</label>
+                                <select class="form-control">
+                                    <option value="" data-i18n="report_select_status">-- Select --</option>
+                                    <option value="balanced" data-i18n="chakra_balanced">Balanced</option>
+                                    <option value="energized" data-i18n="chakra_energized">Energized</option>
+                                    <option value="harmonized" data-i18n="chakra_harmonized">Harmonized</option>
+                                    <option value="improved" data-i18n="chakra_improved">Improved</option>
+                                    <option value="needs-attention" data-i18n="chakra_needs_attention">Needs Further Attention</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="chakra-report-row">
+                            <div class="chakra-name">
+                                <span class="chakra-dot" style="background:#a855f7;"></span>
+                                <span data-i18n="chakra_crown">Crown (Sahasrara)</span>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="report_before">Before</label>
+                                <select class="form-control">
+                                    <option value="normal" data-i18n="chakra_normal" selected>Normal</option>
+                                    <option value="congested" data-i18n="chakra_congested">Congested</option>
+                                    <option value="depleted" data-i18n="chakra_depleted">Depleted</option>
+                                    <option value="over-activated" data-i18n="chakra_over_activated">Over-activated</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="report_after">After</label>
+                                <select class="form-control">
+                                    <option value="" data-i18n="report_select_status">-- Select --</option>
+                                    <option value="balanced" data-i18n="chakra_balanced">Balanced</option>
+                                    <option value="energized" data-i18n="chakra_energized">Energized</option>
+                                    <option value="harmonized" data-i18n="chakra_harmonized">Harmonized</option>
+                                    <option value="improved" data-i18n="chakra_improved">Improved</option>
+                                    <option value="needs-attention" data-i18n="chakra_needs_attention">Needs Further Attention</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Overall Aura -->
+                    <div class="report-section">
+                        <h3>🌈 <span data-i18n="report_overall_aura">Overall Aura Assessment</span></h3>
+                        <div class="aura-row">
+                            <div class="form-group">
+                                <label data-i18n="report_aura_before">Aura Before</label>
+                                <select class="form-control">
+                                    <option value="dim" data-i18n="aura_dim">Dim / Low Energy</option>
+                                    <option value="uneven" data-i18n="aura_uneven" selected>Uneven / Patchy</option>
+                                    <option value="murky" data-i18n="aura_murky">Murky / Clouded</option>
+                                    <option value="tight" data-i18n="aura_tight">Tight / Contracted</option>
+                                    <option value="normal" data-i18n="aura_normal">Normal</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="report_aura_after">Aura After</label>
+                                <select class="form-control">
+                                    <option value="" data-i18n="report_select_status">-- Select --</option>
+                                    <option value="bright" data-i18n="aura_bright">Bright / Radiant</option>
+                                    <option value="expanded" data-i18n="aura_expanded">Expanded / Full</option>
+                                    <option value="balanced" data-i18n="aura_balanced">Balanced / Even</option>
+                                    <option value="clear" data-i18n="aura_clear">Clear / Clean</option>
+                                    <option value="strengthened" data-i18n="aura_strengthened">Strengthened</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Therapist Notes -->
+                    <div class="report-section">
+                        <h3>📝 <span data-i18n="report_therapist_notes">Therapist Notes</span></h3>
+                        <div class="form-group">
+                            <label data-i18n="report_notes_label">Additional Notes &amp; Recommendations</label>
+                            <textarea class="form-control" rows="4" placeholder="Enter your observations, recommendations, and follow-up instructions..." data-i18n-placeholder="report_notes_placeholder"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="report-actions">
+                        <button class="btn btn-secondary" data-i18n="btn_save_draft">Save Draft</button>
+                        <button class="btn btn-primary" id="generateReportBtn" data-i18n="btn_generate_send">Generate &amp; Send Report</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============ PACKAGES SECTION ============ -->
+            <section class="content-section" id="section-packages">
+                <div class="packages-header">
+                    <h2 class="section-title" style="margin-bottom:0;" data-i18n="packages_title">Packages &amp; Pricing</h2>
+                    <button class="btn btn-primary" id="addPackageBtn">
+                        ➕ <span data-i18n="btn_add_package">Add New Package</span>
+                    </button>
+                </div>
+
+                <!-- Add Package Form (hidden by default) -->
+                <div class="package-form-card" id="packageForm">
+                    <h3 data-i18n="new_package_title">New Package</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-i18n="pkg_name_label">Package Name</label>
+                            <input type="text" class="form-control" placeholder="e.g., Gold Package" data-i18n-placeholder="pkg_name_placeholder" id="pkgName">
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="pkg_sessions_label">Number of Sessions</label>
+                            <input type="number" class="form-control" placeholder="e.g., 5" id="pkgSessions">
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="pkg_price_label">Price (₹)</label>
+                            <input type="number" class="form-control" placeholder="e.g., 2000" id="pkgPrice">
+                        </div>
+                    </div>
+                    <div class="form-row-full">
+                        <div class="form-group">
+                            <label data-i18n="pkg_description_label">Description</label>
+                            <textarea class="form-control" rows="2" placeholder="Describe the package..." data-i18n-placeholder="pkg_desc_placeholder" id="pkgDesc"></textarea>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 16px;">
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked id="pkgStatus">
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label" data-i18n="pkg_active_label">Active</span>
+                        </label>
+                    </div>
+                    <div class="package-form-actions">
+                        <button class="btn btn-primary" id="savePackageBtn" data-i18n="btn_save_package">Save Package</button>
+                        <button class="btn btn-secondary" id="cancelPackageBtn" data-i18n="btn_cancel">Cancel</button>
+                    </div>
+                </div>
+
+                <!-- Packages Table -->
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="data-table" id="packagesTable">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="th_package_name">Package Name</th>
+                                    <th data-i18n="th_sessions">Sessions</th>
+                                    <th data-i18n="th_price">Price (₹)</th>
+                                    <th data-i18n="th_status">Status</th>
+                                    <th data-i18n="th_actions">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="packagesBody">
+                                <tr>
+                                    <td class="client-name" data-i18n="pkg_single_session">Single Session</td>
+                                    <td>1</td>
+                                    <td>₹500</td>
+                                    <td><span class="badge badge-completed" data-i18n="pkg_status_active">Active</span></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-secondary btn-sm" data-i18n="btn_edit">Edit</button>
+                                            <button class="btn btn-outline btn-sm btn-toggle-status" data-i18n="btn_deactivate">Deactivate</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="client-name" data-i18n="pkg_physical_wellness">Physical Wellness</td>
+                                    <td>5</td>
+                                    <td>₹2,000</td>
+                                    <td><span class="badge badge-completed" data-i18n="pkg_status_active">Active</span></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-secondary btn-sm" data-i18n="btn_edit">Edit</button>
+                                            <button class="btn btn-outline btn-sm btn-toggle-status" data-i18n="btn_deactivate">Deactivate</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="client-name" data-i18n="pkg_mental_balance">Mental Balance</td>
+                                    <td>5</td>
+                                    <td>₹2,000</td>
+                                    <td><span class="badge badge-completed" data-i18n="pkg_status_active">Active</span></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-secondary btn-sm" data-i18n="btn_edit">Edit</button>
+                                            <button class="btn btn-outline btn-sm btn-toggle-status" data-i18n="btn_deactivate">Deactivate</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="client-name" data-i18n="pkg_prosperity_flow">Prosperity Flow</td>
+                                    <td>7</td>
+                                    <td>₹3,000</td>
+                                    <td><span class="badge badge-completed" data-i18n="pkg_status_active">Active</span></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-secondary btn-sm" data-i18n="btn_edit">Edit</button>
+                                            <button class="btn btn-outline btn-sm btn-toggle-status" data-i18n="btn_deactivate">Deactivate</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="client-name" data-i18n="pkg_remote_family">Remote Family Care</td>
+                                    <td data-i18n="pkg_10_per_month">10 / month</td>
+                                    <td>₹4,000</td>
+                                    <td><span class="badge badge-completed" data-i18n="pkg_status_active">Active</span></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-secondary btn-sm" data-i18n="btn_edit">Edit</button>
+                                            <button class="btn btn-outline btn-sm btn-toggle-status" data-i18n="btn_deactivate">Deactivate</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="client-name" data-i18n="pkg_life_mileage_monthly">Life Mileage (Monthly)</td>
+                                    <td data-i18n="pkg_2_per_month">2 / month</td>
+                                    <td>₹800</td>
+                                    <td><span class="badge badge-completed" data-i18n="pkg_status_active">Active</span></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-secondary btn-sm" data-i18n="btn_edit">Edit</button>
+                                            <button class="btn btn-outline btn-sm btn-toggle-status" data-i18n="btn_deactivate">Deactivate</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="client-name" data-i18n="pkg_free_trial">Free Trial</td>
+                                    <td>1</td>
+                                    <td>₹0</td>
+                                    <td><span class="badge badge-completed" data-i18n="pkg_status_active">Active</span></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button class="btn btn-secondary btn-sm" data-i18n="btn_edit">Edit</button>
+                                            <button class="btn btn-outline btn-sm btn-toggle-status" data-i18n="btn_deactivate">Deactivate</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============ SETTINGS SECTION ============ -->
+            <section class="content-section" id="section-settings">
+                <h2 class="section-title" data-i18n="settings_title">Settings</h2>
+
+                <div class="settings-grid">
+                    <!-- Profile Settings -->
+                    <div class="settings-card">
+                        <h3 data-i18n="settings_profile">👤 Profile Settings</h3>
+                        <div class="form-group" style="margin-bottom:14px;">
+                            <label data-i18n="settings_name_label">Display Name</label>
+                            <input type="text" class="form-control" value="Arun Kumar">
+                        </div>
+                        <div class="form-group" style="margin-bottom:14px;">
+                            <label data-i18n="settings_email_label">Email</label>
+                            <input type="email" class="form-control" value="arun@auralife.in">
+                        </div>
+                        <div class="form-group" style="margin-bottom:14px;">
+                            <label data-i18n="settings_phone_label">Phone</label>
+                            <input type="tel" class="form-control" value="+91 98765 00000">
+                        </div>
+                        <button class="btn btn-primary" data-i18n="btn_save_changes">Save Changes</button>
+                    </div>
+
+                    <!-- Notification Settings -->
+                    <div class="settings-card">
+                        <h3 data-i18n="settings_notifications">🔔 Notifications</h3>
+                        <div class="settings-row">
+                            <div>
+                                <div class="settings-row-label" data-i18n="settings_email_notif">Email Notifications</div>
+                                <div class="settings-row-desc" data-i18n="settings_email_notif_desc">Receive email for new requests</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="settings-row">
+                            <div>
+                                <div class="settings-row-label" data-i18n="settings_sms_notif">SMS Notifications</div>
+                                <div class="settings-row-desc" data-i18n="settings_sms_notif_desc">SMS alerts for urgent requests</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="settings-row">
+                            <div>
+                                <div class="settings-row-label" data-i18n="settings_whatsapp_notif">WhatsApp Notifications</div>
+                                <div class="settings-row-desc" data-i18n="settings_whatsapp_notif_desc">Send reports via WhatsApp</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Language Settings -->
+                    <div class="settings-card">
+                        <h3 data-i18n="settings_language">🌐 Language Settings</h3>
+                        <div class="form-group" style="margin-bottom:14px;">
+                            <label data-i18n="settings_default_lang">Default Language</label>
+                            <select class="form-control" id="settingsLang">
+                                <option value="en">English</option>
+                                <option value="ta">தமிழ் (Tamil)</option>
+                            </select>
+                        </div>
+                        <div class="settings-row">
+                            <div>
+                                <div class="settings-row-label" data-i18n="settings_bilingual_reports">Bilingual Reports</div>
+                                <div class="settings-row-desc" data-i18n="settings_bilingual_desc">Send reports in both languages</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Business Settings -->
+                    <div class="settings-card">
+                        <h3 data-i18n="settings_business">🏢 Business Settings</h3>
+                        <div class="form-group" style="margin-bottom:14px;">
+                            <label data-i18n="settings_business_name">Business Name</label>
+                            <input type="text" class="form-control" value="AuraLife Energy Therapy">
+                        </div>
+                        <div class="form-group" style="margin-bottom:14px;">
+                            <label data-i18n="settings_timezone">Timezone</label>
+                            <select class="form-control">
+                                <option value="IST" selected>IST (Asia/Kolkata)</option>
+                                <option value="UTC">UTC</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" data-i18n="btn_save_changes">Save Changes</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- ============ CHAKRA ASSESSMENT MODAL ============ -->
+    <div class="modal-overlay" id="chakraModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 data-i18n="modal_chakra_title">🔮 Chakra Assessment</h2>
+                <button class="modal-close" id="closeChakraModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Client Summary -->
+                <div class="client-summary">
+                    <div class="client-summary-item">
+                        <div class="summary-label" data-i18n="modal_client">Client</div>
+                        <div class="summary-value" id="modalClientName">—</div>
+                    </div>
+                    <div class="client-summary-item">
+                        <div class="summary-label" data-i18n="modal_service">Service</div>
+                        <div class="summary-value" id="modalServiceType">—</div>
+                    </div>
+                    <div class="client-summary-item">
+                        <div class="summary-label" data-i18n="modal_date">Date</div>
+                        <div class="summary-value" id="modalDate">—</div>
+                    </div>
+                </div>
+
+                <!-- 7 Chakra Rows -->
+                <div class="chakra-assessment-list">
+                    <!-- Root Chakra -->
+                    <div class="chakra-row">
+                        <div class="chakra-name">
+                            <span class="chakra-dot" style="background:#e11d48;"></span>
+                            <span data-i18n="chakra_root">Root (Muladhara)</span>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="chakra_status_label">Status</label>
+                            <select class="form-control chakra-status-select">
+                                <option value="normal" data-i18n="chakra_normal">Normal</option>
+                                <option value="congested" data-i18n="chakra_congested">Congested</option>
+                                <option value="depleted" data-i18n="chakra_depleted">Depleted</option>
+                                <option value="over-activated" data-i18n="chakra_over_activated">Over-activated</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="chakra_notes_label">Notes</label>
+                            <textarea class="form-control" rows="2" placeholder="Observations..." data-i18n-placeholder="chakra_notes_placeholder"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Sacral Chakra -->
+                    <div class="chakra-row">
+                        <div class="chakra-name">
+                            <span class="chakra-dot" style="background:#f97316;"></span>
+                            <span data-i18n="chakra_sacral">Sacral (Svadhisthana)</span>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="chakra_status_label">Status</label>
+                            <select class="form-control chakra-status-select">
+                                <option value="normal" data-i18n="chakra_normal">Normal</option>
+                                <option value="congested" data-i18n="chakra_congested">Congested</option>
+                                <option value="depleted" data-i18n="chakra_depleted">Depleted</option>
+                                <option value="over-activated" data-i18n="chakra_over_activated">Over-activated</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="chakra_notes_label">Notes</label>
+                            <textarea class="form-control" rows="2" placeholder="Observations..." data-i18n-placeholder="chakra_notes_placeholder"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Solar Plexus -->
+                    <div class="chakra-row">
+                        <div class="chakra-name">
+                            <span class="chakra-dot" style="background:#eab308;"></span>
+                            <span data-i18n="chakra_solar">Solar Plexus (Manipura)</span>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="chakra_status_label">Status</label>
+                            <select class="form-control chakra-status-select">
+                                <option value="normal" data-i18n="chakra_normal">Normal</option>
+                                <option value="congested" data-i18n="chakra_congested">Congested</option>
+                                <option value="depleted" data-i18n="chakra_depleted">Depleted</option>
+                                <option value="over-activated" data-i18n="chakra_over_activated">Over-activated</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="chakra_notes_label">Notes</label>
+                            <textarea class="form-control" rows="2" placeholder="Observations..." data-i18n-placeholder="chakra_notes_placeholder"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Heart -->
+                    <div class="chakra-row">
+                        <div class="chakra-name">
+                            <span class="chakra-dot" style="background:#22c55e;"></span>
+                            <span data-i18n="chakra_heart">Heart (Anahata)</span>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="chakra_status_label">Status</label>
+                            <select class="form-control chakra-status-select">
+                                <option value="normal" data-i18n="chakra_normal">Normal</option>
+                                <option value="congested" data-i18n="chakra_congested">Congested</option>
+                                <option value="depleted" data-i18n="chakra_depleted">Depleted</option>
+                                <option value="over-activated" data-i18n="chakra_over_activated">Over-activated</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="chakra_notes_label">Notes</label>
+                            <textarea class="form-control" rows="2" placeholder="Observations..." data-i18n-placeholder="chakra_notes_placeholder"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Throat -->
+                    <div class="chakra-row">
+                        <div class="chakra-name">
+                            <span class="chakra-dot" style="background:#06b6d4;"></span>
+                            <span data-i18n="chakra_throat">Throat (Vishuddha)</span>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="chakra_status_label">Status</label>
+                            <select class="form-control chakra-status-select">
+                                <option value="normal" data-i18n="chakra_normal">Normal</option>
+                                <option value="congested" data-i18n="chakra_congested">Congested</option>
+                                <option value="depleted" data-i18n="chakra_depleted">Depleted</option>
+                                <option value="over-activated" data-i18n="chakra_over_activated">Over-activated</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="chakra_notes_label">Notes</label>
+                            <textarea class="form-control" rows="2" placeholder="Observations..." data-i18n-placeholder="chakra_notes_placeholder"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Third Eye -->
+                    <div class="chakra-row">
+                        <div class="chakra-name">
+                            <span class="chakra-dot" style="background:#6366f1;"></span>
+                            <span data-i18n="chakra_third_eye">Third Eye (Ajna)</span>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="chakra_status_label">Status</label>
+                            <select class="form-control chakra-status-select">
+                                <option value="normal" data-i18n="chakra_normal">Normal</option>
+                                <option value="congested" data-i18n="chakra_congested">Congested</option>
+                                <option value="depleted" data-i18n="chakra_depleted">Depleted</option>
+                                <option value="over-activated" data-i18n="chakra_over_activated">Over-activated</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="chakra_notes_label">Notes</label>
+                            <textarea class="form-control" rows="2" placeholder="Observations..." data-i18n-placeholder="chakra_notes_placeholder"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Crown -->
+                    <div class="chakra-row">
+                        <div class="chakra-name">
+                            <span class="chakra-dot" style="background:#a855f7;"></span>
+                            <span data-i18n="chakra_crown">Crown (Sahasrara)</span>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="chakra_status_label">Status</label>
+                            <select class="form-control chakra-status-select">
+                                <option value="normal" data-i18n="chakra_normal">Normal</option>
+                                <option value="congested" data-i18n="chakra_congested">Congested</option>
+                                <option value="depleted" data-i18n="chakra_depleted">Depleted</option>
+                                <option value="over-activated" data-i18n="chakra_over_activated">Over-activated</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label data-i18n="chakra_notes_label">Notes</label>
+                            <textarea class="form-control" rows="2" placeholder="Observations..." data-i18n-placeholder="chakra_notes_placeholder"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelChakraBtn" data-i18n="btn_cancel">Cancel</button>
+                <button class="btn btn-primary" id="saveChakraBtn" data-i18n="btn_save_assessment">Save Assessment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/i18n.js"></script>
+    <script>
+        /* ============================================================
+           AuraLife Admin Dashboard - Controller & Data Sync
+           ============================================================ */
+        (function () {
+            'use strict';
+
+            // ---- Default Seed Requests ----
+            const defaultRequests = [
+                {
+                    id: 'REQ001',
+                    clientName: 'Karthik R.',
+                    phone: '+91 98765 43210',
+                    email: 'karthik.r@email.com',
+                    bookingFor: 'self',
+                    service: 'Mental & Emotional Balance',
+                    concern: 'Severe work anxiety, panic spikes, and insomnia for 3 months due to corporate deadline pressure.',
+                    date: '18 Nov 2026',
+                    status: 'new',
+                    chakraAssessment: null
+                },
+                {
+                    id: 'REQ002',
+                    clientName: 'Priya M.',
+                    phone: '+91 87654 32109',
+                    email: 'priya.m@email.com',
+                    bookingFor: 'family',
+                    familyName: 'Ramanathan & Lakshmi (Parents)',
+                    familyAge: '68 & 65',
+                    familyRelation: 'Parents',
+                    service: 'Remote Family Care',
+                    concern: 'Parents living in Madurai with joint pain and high blood pressure while I work remotely in Bangalore.',
+                    date: '17 Nov 2026',
+                    status: 'in-progress',
+                    chakraAssessment: {
+                        basic: { status: 'depleted', notes: 'Low physical stamina, joint aches' },
+                        heart: { status: 'congested', notes: 'BP stress, loneliness' }
+                    }
+                },
+                {
+                    id: 'REQ003',
+                    clientName: 'Suresh K.',
+                    phone: '+91 76543 21098',
+                    email: 'suresh.k@email.com',
+                    bookingFor: 'self',
+                    service: 'Life Mileage Maintenance',
+                    concern: 'IT Senior Architect. Regular monthly energy maintenance tune-up for peak stamina and focus.',
+                    date: '16 Nov 2026',
+                    status: 'completed',
+                    chakraAssessment: {
+                        solar: { status: 'harmonized', notes: 'Acidity balanced' },
+                        basic: { status: 'energized', notes: 'Vitality replenished' }
+                    }
+                },
+                {
+                    id: 'REQ004',
+                    clientName: 'Meena S.',
+                    phone: '+91 65432 10987',
+                    email: 'meena.s@email.com',
+                    bookingFor: 'self',
+                    service: 'Physical Wellness',
+                    concern: 'Persistent respiratory wheezing, post-viral fatigue, and sluggish digestion.',
+                    date: '15 Nov 2026',
+                    status: 'new',
+                    chakraAssessment: null
+                },
+                {
+                    id: 'REQ005',
+                    clientName: 'Ravi N.',
+                    phone: '+91 54321 09876',
+                    email: 'ravi.n@email.com',
+                    bookingFor: 'self',
+                    service: 'Prosperity & Career Flow',
+                    concern: 'Business contract stagnation and financial cash flow blocks over the past 6 months.',
+                    date: '14 Nov 2026',
+                    status: 'in-progress',
+                    chakraAssessment: {
+                        basic: { status: 'depleted', notes: 'Financial insecurity' },
+                        solar: { status: 'over-activated', notes: 'Anxiety over business' }
+                    }
+                }
+            ];
+
+            // Load requests from localStorage
+            function getRequests() {
+                try {
+                    const stored = localStorage.getItem('auralife_requests');
+                    if (stored) {
+                        const parsed = JSON.parse(stored);
+                        if (Array.isArray(parsed) && parsed.length > 0) {
+                            return parsed;
+                        }
+                    }
+                } catch (e) {
+                    console.error('Error reading requests', e);
+                }
+                localStorage.setItem('auralife_requests', JSON.stringify(defaultRequests));
+                return defaultRequests;
+            }
+
+            function saveRequests(list) {
+                try {
+                    localStorage.setItem('auralife_requests', JSON.stringify(list));
+                } catch (e) {
+                    console.error('Error saving requests', e);
+                }
+            }
+
+            let requests = getRequests();
+            let currentFilter = 'all';
+            let activeAssessingRequestId = null;
+
+            // ---- Navigation Setup ----
+            const sectionTitles = {
+                dashboard: 'Therapist Dashboard',
+                requests: 'Client Requests Queue',
+                reports: 'Healing Progress Reports',
+                packages: 'Dynamic Packages & Pricing',
+                settings: 'System & Profile Settings'
+            };
+
+            const sectionI18nKeys = {
+                dashboard: 'header_dashboard',
+                requests: 'header_requests',
+                reports: 'header_reports',
+                packages: 'header_packages',
+                settings: 'header_settings'
+            };
+
+            const navItems = document.querySelectorAll('.sidebar-nav .nav-item');
+            const sections = document.querySelectorAll('.content-section');
+            const headerTitle = document.getElementById('headerTitle');
+
+            function switchSection(sectionId) {
+                navItems.forEach(item => {
+                    item.classList.toggle('active', item.dataset.section === sectionId);
+                });
+                sections.forEach(sec => {
+                    sec.classList.toggle('active', sec.id === `section-${sectionId}`);
+                });
+                if (headerTitle) {
+                    headerTitle.textContent = sectionTitles[sectionId] || 'Dashboard';
+                    headerTitle.setAttribute('data-i18n', sectionI18nKeys[sectionId] || 'header_dashboard');
+                    if (typeof window.applyTranslations === 'function') {
+                        window.applyTranslations();
+                    }
+                }
+                closeMobileSidebar();
+            }
+
+            navItems.forEach(item => {
+                item.addEventListener('click', () => switchSection(item.dataset.section));
+            });
+
+            const viewAllBtn = document.getElementById('viewAllRequests');
+            if (viewAllBtn) {
+                viewAllBtn.addEventListener('click', () => switchSection('requests'));
+            }
+
+            // ---- Mobile Sidebar ----
+            const sidebar = document.getElementById('adminSidebar');
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+            function openMobileSidebar() {
+                if (sidebar) sidebar.classList.add('open');
+                if (sidebarOverlay) sidebarOverlay.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeMobileSidebar() {
+                if (sidebar) sidebar.classList.remove('open');
+                if (sidebarOverlay) sidebarOverlay.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+
+            if (hamburgerBtn) hamburgerBtn.addEventListener('click', () => {
+                sidebar && sidebar.classList.contains('open') ? closeMobileSidebar() : openMobileSidebar();
+            });
+            if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeMobileSidebar);
+
+            // ---- Language Switcher ----
+            const langToggle = document.getElementById('langToggle');
+            const langLabel = document.getElementById('langLabel');
+
+            function updateLangButton() {
+                const lang = (typeof window.AuraLife_i18n !== 'undefined' ? window.AuraLife_i18n.getCurrentLanguage() : 'en');
+                if (langLabel) langLabel.textContent = lang.toUpperCase();
+            }
+
+            if (langToggle) {
+                langToggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (typeof window.toggleLanguage === 'function') {
+                        window.toggleLanguage();
+                        updateLangButton();
+                    }
+                });
+            }
+
+            document.addEventListener('languageChanged', () => {
+                updateLangButton();
+                renderAll();
+            });
+
+            // ---- Translation Helper ----
+            function t(key, fallback) {
+                if (typeof window.t === 'function') {
+                    const res = window.t(key);
+                    if (res && res !== key) return res;
+                }
+                return fallback || key;
+            }
+
+            // ---- Render Overview Stats ----
+            function renderStats() {
+                const total = requests.length;
+                const newCount = requests.filter(r => r.status === 'new').length;
+                const inProgressCount = requests.filter(r => r.status === 'in-progress').length;
+                const completedCount = requests.filter(r => r.status === 'completed').length;
+
+                const elTotal = document.getElementById('statTotalClients');
+                const elNew = document.getElementById('statNewRequests');
+                const elProgress = document.getElementById('statInProgress');
+                const elCompleted = document.getElementById('statCompleted');
+
+                if (elTotal) elTotal.textContent = total;
+                if (elNew) elNew.textContent = newCount;
+                if (elProgress) elProgress.textContent = inProgressCount;
+                if (elCompleted) elCompleted.textContent = completedCount;
+
+                // Update tab count badges in Requests view
+                document.querySelectorAll('.filter-tab').forEach(tab => {
+                    const f = tab.dataset.filter;
+                    const badge = tab.querySelector('.tab-count');
+                    if (badge) {
+                        if (f === 'all') badge.textContent = total;
+                        if (f === 'new') badge.textContent = newCount;
+                        if (f === 'in-progress') badge.textContent = inProgressCount;
+                        if (f === 'completed') badge.textContent = completedCount;
+                    }
+                });
+            }
+
+            // ---- Render Dashboard Recent Requests Table ----
+            function renderRecentTable() {
+                const tbody = document.getElementById('recentRequestsBody');
+                if (!tbody) return;
+
+                const recent = requests.slice(0, 5);
+                tbody.innerHTML = '';
+
+                recent.forEach(req => {
+                    const tr = document.createElement('tr');
+                    const statusClass = req.status === 'new' ? 'badge-new' : req.status === 'in-progress' ? 'badge-progress' : 'badge-completed';
+                    const statusText = req.status === 'new' ? t('status_new', 'New') : req.status === 'in-progress' ? t('status_in_progress', 'In Progress') : t('status_completed', 'Completed');
+                    const bookingForText = req.bookingFor === 'family' ? t('booking_family', 'Remote Family') : t('booking_self', 'Self');
+
+                    tr.innerHTML = `
+                        <td class="client-name"><strong>${escapeHtml(req.clientName)}</strong></td>
+                        <td>${escapeHtml(req.service || 'Physical Wellness')}</td>
+                        <td><span style="font-size:0.85rem; color:#475569;">${bookingForText}</span></td>
+                        <td>${escapeHtml(req.date || 'Today')}</td>
+                        <td><span class="badge ${statusClass}">${statusText}</span></td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" onclick="window.handleOpenRequestDetails('${req.id}')">${t('btn_view', 'View')}</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // ---- Render Requests Cards ----
+            function renderRequestCards() {
+                const container = document.getElementById('requestCards');
+                if (!container) return;
+
+                const filtered = requests.filter(r => currentFilter === 'all' || r.status === currentFilter);
+                container.innerHTML = '';
+
+                if (filtered.length === 0) {
+                    container.innerHTML = `<div style="padding: 2.5rem; text-align: center; color: var(--text-muted); background:#fff; border-radius:8px;">No requests found in this category.</div>`;
+                    return;
+                }
+
+                filtered.forEach(req => {
+                    const card = document.createElement('div');
+                    card.className = 'request-card';
+                    card.dataset.status = req.status;
+
+                    const statusClass = req.status === 'new' ? 'badge-new' : req.status === 'in-progress' ? 'badge-progress' : 'badge-completed';
+                    const statusText = req.status === 'new' ? t('status_new', 'New') : req.status === 'in-progress' ? t('status_in_progress', 'In Progress') : t('status_completed', 'Completed');
+                    const bookingForText = req.bookingFor === 'family' ? t('booking_family', 'Remote Family (Parents)') : t('booking_self', 'Self');
+
+                    let familyHtml = '';
+                    if (req.bookingFor === 'family' && req.familyName) {
+                        familyHtml = `
+                            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:0.6rem 0.8rem; margin:0.6rem 0; font-size:0.85rem; color:#334155;">
+                                <strong>👨‍👩‍👧 Recipient:</strong> ${escapeHtml(req.familyName)} ${req.familyAge ? `(Age: ${escapeHtml(req.familyAge)})` : ''} ${req.familyRelation ? `— ${escapeHtml(req.familyRelation)}` : ''}
+                            </div>
+                        `;
+                    }
+
+                    let chakraBadgeHtml = '';
+                    if (req.chakraAssessment) {
+                        chakraBadgeHtml = `<div style="font-size:0.8rem; color:#166534; background:#dcfce7; padding:0.25rem 0.5rem; border-radius:4px; margin-top:0.4rem; display:inline-block;">✓ Chakras Assessed</div>`;
+                    }
+
+                    card.innerHTML = `
+                        <div class="request-card-header">
+                            <div class="request-client-info">
+                                <h4>${escapeHtml(req.clientName)}</h4>
+                                <div class="request-client-contact">
+                                    <span>📞 <a href="tel:${escapeHtml(req.phone)}" style="text-decoration:none; color:inherit;">${escapeHtml(req.phone)}</a></span>
+                                    ${req.email ? `<span>✉️ <a href="mailto:${escapeHtml(req.email)}" style="text-decoration:none; color:inherit;">${escapeHtml(req.email)}</a></span>` : ''}
+                                </div>
+                            </div>
+                            <span class="badge ${statusClass}">${statusText}</span>
+                        </div>
+                        <div class="request-meta">
+                            <div class="meta-item">
+                                <span class="meta-label">${t('meta_service', 'Plan:')}</span>
+                                <span>${escapeHtml(req.service || 'General Energy Care')}</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">${t('meta_booking_for', 'Booking For:')}</span>
+                                <span>${bookingForText}</span>
+                            </div>
+                        </div>
+                        ${familyHtml}
+                        <div class="request-concern" style="margin-top:0.5rem; font-size:0.92rem; line-height:1.6; color:#1e293b; background:#f8fafc; padding:0.75rem; border-radius:6px;">
+                            "${escapeHtml(req.concern)}"
+                        </div>
+                        ${chakraBadgeHtml}
+                        <div class="request-card-actions" style="margin-top:1rem;">
+                            <button class="btn btn-secondary btn-sm" onclick="window.handleOpenRequestDetails('${req.id}')">${t('btn_view_details', 'View Details')}</button>
+                            <button class="btn btn-primary btn-sm" onclick="window.handleStartConsultation('${req.id}')">${t('btn_start_consultation', 'Start Consultation')}</button>
+                            <button class="btn btn-gold btn-sm" onclick="window.handleOpenChakraModal('${req.id}')">${t('btn_assess_chakras', 'Assess Chakras')}</button>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            }
+
+            // ---- Filter Tabs ----
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    currentFilter = tab.dataset.filter || 'all';
+                    renderRequestCards();
+                });
+            });
+
+            // ---- Chakra Assessment Modal ----
+            const chakraModal = document.getElementById('chakraModal');
+            const closeChakraModal = document.getElementById('closeChakraModal');
+            const cancelChakraBtn = document.getElementById('cancelChakraBtn');
+            const saveChakraBtn = document.getElementById('saveChakraBtn');
+            const modalClientName = document.getElementById('modalClientName');
+            const modalServiceType = document.getElementById('modalServiceType');
+            const modalDate = document.getElementById('modalDate');
+
+            function closeModal() {
+                if (chakraModal) {
+                    chakraModal.classList.remove('show');
+                    document.body.style.overflow = '';
+                }
+            }
+
+            if (closeChakraModal) closeChakraModal.addEventListener('click', closeModal);
+            if (cancelChakraBtn) cancelChakraBtn.addEventListener('click', closeModal);
+            if (chakraModal) {
+                chakraModal.addEventListener('click', (e) => {
+                    if (e.target === chakraModal) closeModal();
+                });
+            }
+
+            window.handleOpenChakraModal = function (reqId) {
+                const req = requests.find(r => r.id === reqId);
+                if (!req) return;
+
+                activeAssessingRequestId = reqId;
+                if (modalClientName) modalClientName.textContent = req.clientName;
+                if (modalServiceType) modalServiceType.textContent = req.service;
+                if (modalDate) modalDate.textContent = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+
+                if (chakraModal) {
+                    chakraModal.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                }
+            };
+
+            if (saveChakraBtn) {
+                saveChakraBtn.addEventListener('click', () => {
+                    if (!activeAssessingRequestId) return;
+                    const req = requests.find(r => r.id === activeAssessingRequestId);
+                    if (req) {
+                        req.status = 'in-progress';
+                        req.chakraAssessment = {
+                            date: new Date().toISOString(),
+                            saved: true
+                        };
+                        saveRequests(requests);
+                        renderAll();
+                        showToast(`Chakra assessment saved for ${req.clientName}! Status updated to In-Progress.`, 'success');
+                    }
+                    closeModal();
+                });
+            }
+
+            // ---- Start Consultation ----
+            window.handleStartConsultation = function (reqId) {
+                const req = requests.find(r => r.id === reqId);
+                if (!req) return;
+
+                if (req.status === 'new') {
+                    req.status = 'in-progress';
+                    saveRequests(requests);
+                    renderAll();
+                }
+
+                const cleanPhone = (req.phone || '').replace(/[^0-9]/g, '');
+                const greeting = encodeURIComponent(`Hello ${req.clientName}, this is Anand Kumar from AuraLife Energy Therapy regarding your ${req.service} request. Are you available for a brief consultation?`);
+                const waUrl = `https://wa.me/${cleanPhone}?text=${greeting}`;
+
+                const choice = confirm(`Start Consultation with ${req.clientName}?\n\nClick OK to open WhatsApp Web/App, or Cancel to keep status as In-Progress.`);
+                if (choice) {
+                    window.open(waUrl, '_blank');
+                }
+                showToast(`Consultation initiated for ${req.clientName}.`, 'info');
+            };
+
+            window.handleOpenRequestDetails = function (reqId) {
+                const req = requests.find(r => r.id === reqId);
+                if (!req) return;
+                alert(`Client: ${req.clientName}\nContact: ${req.phone}\nPlan: ${req.service}\nBooking For: ${req.bookingFor}\n\nClient Concern:\n"${req.concern}"`);
+            };
+
+            // ---- Report Builder Client Selector Sync ----
+            function populateReportClientSelect() {
+                const sel = document.getElementById('reportClientSelect');
+                if (!sel) return;
+
+                const currentVal = sel.value;
+                sel.innerHTML = `<option value="">${t('report_select_placeholder', '-- Choose an active client --')}</option>`;
+
+                requests.forEach(r => {
+                    const opt = document.createElement('option');
+                    opt.value = r.id;
+                    opt.textContent = `${r.clientName} (${r.service || 'Energy Care'})`;
+                    sel.appendChild(opt);
+                });
+
+                if (currentVal) sel.value = currentVal;
+            }
+
+            const generateReportBtn = document.getElementById('generateReportBtn');
+            if (generateReportBtn) {
+                generateReportBtn.addEventListener('click', () => {
+                    const sel = document.getElementById('reportClientSelect');
+                    if (!sel || !sel.value) {
+                        showToast('Please select a client from the dropdown first.', 'error');
+                        return;
+                    }
+                    const req = requests.find(r => r.id === sel.value);
+                    const name = req ? req.clientName : 'Client';
+                    showToast(`Bilingual Before & After report generated & shared for ${name}!`, 'success');
+                });
+            }
+
+            // ---- Dynamic Packages Table ----
+            const defaultPackages = [
+                { name: 'Single Consultation Session', sessions: '1', price: '500', active: true },
+                { name: 'Physical Wellness Care', sessions: '5', price: '2,000', active: true },
+                { name: 'Mental Balance & Emotional Peace', sessions: '5', price: '2,000', active: true },
+                { name: 'Prosperity & Career Energy Clearing', sessions: '7', price: '3,000', active: true },
+                { name: 'Remote Family Care (Monthly)', sessions: '8', price: '3,500', active: true },
+                { name: 'Life Mileage Monthly Maintenance', sessions: '2', price: '900', active: true }
+            ];
+
+            function getPackages() {
+                try {
+                    const stored = localStorage.getItem('auralife_packages');
+                    if (stored) return JSON.parse(stored);
+                } catch (e) {}
+                localStorage.setItem('auralife_packages', JSON.stringify(defaultPackages));
+                return defaultPackages;
+            }
+
+            function savePackages(pkgs) {
+                try {
+                    localStorage.setItem('auralife_packages', JSON.stringify(pkgs));
+                } catch (e) {}
+            }
+
+            let packages = getPackages();
+
+            function renderPackagesTable() {
+                const tbody = document.getElementById('packagesBody');
+                if (!tbody) return;
+
+                tbody.innerHTML = '';
+                packages.forEach((pkg, index) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td class="client-name">${escapeHtml(pkg.name)}</td>
+                        <td>${escapeHtml(pkg.sessions)}</td>
+                        <td>₹${escapeHtml(pkg.price)}</td>
+                        <td><span class="badge ${pkg.active ? 'badge-completed' : 'badge-inactive'}">${pkg.active ? 'Active' : 'Inactive'}</span></td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-outline btn-sm" onclick="window.togglePackageActive(${index})">${pkg.active ? 'Deactivate' : 'Activate'}</button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            window.togglePackageActive = function (index) {
+                if (packages[index]) {
+                    packages[index].active = !packages[index].active;
+                    savePackages(packages);
+                    renderPackagesTable();
+                    showToast(`Package "${packages[index].name}" updated.`, 'info');
+                }
+            };
+
+            const addPackageBtn = document.getElementById('addPackageBtn');
+            const packageForm = document.getElementById('packageForm');
+            const cancelPackageBtn = document.getElementById('cancelPackageBtn');
+            const savePackageBtn = document.getElementById('savePackageBtn');
+
+            if (addPackageBtn && packageForm) {
+                addPackageBtn.addEventListener('click', () => {
+                    packageForm.classList.toggle('show');
+                });
+            }
+
+            if (cancelPackageBtn && packageForm) {
+                cancelPackageBtn.addEventListener('click', () => {
+                    packageForm.classList.remove('show');
+                });
+            }
+
+            if (savePackageBtn) {
+                savePackageBtn.addEventListener('click', () => {
+                    const name = document.getElementById('pkgName').value.trim();
+                    const sessions = document.getElementById('pkgSessions').value.trim();
+                    const price = document.getElementById('pkgPrice').value.trim();
+                    const active = document.getElementById('pkgStatus').checked;
+
+                    if (!name || !sessions || !price) {
+                        showToast('Please fill in Package Name, Sessions, and Price.', 'error');
+                        return;
+                    }
+
+                    packages.push({ name, sessions, price, active });
+                    savePackages(packages);
+                    renderPackagesTable();
+
+                    if (packageForm) packageForm.classList.remove('show');
+                    document.getElementById('pkgName').value = '';
+                    document.getElementById('pkgSessions').value = '';
+                    document.getElementById('pkgPrice').value = '';
+
+                    showToast(`New package "${name}" saved!`, 'success');
+                });
+            }
+
+            // ---- Toast Notifications ----
+            function showToast(message, type = 'info') {
+                const container = document.getElementById('toastContainer');
+                if (!container) return;
+
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+                toast.innerHTML = `<span>${icons[type] || 'ℹ️'}</span> ${escapeHtml(message)}`;
+                container.appendChild(toast);
+
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(40px)';
+                    toast.style.transition = 'all 0.3s ease';
+                    setTimeout(() => toast.remove(), 300);
+                }, 3500);
+            }
+
+            function escapeHtml(str) {
+                if (!str) return '';
+                const div = document.createElement('div');
+                div.textContent = str;
+                return div.innerHTML;
+            }
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeModal();
+            });
+
+            // Master Render
+            function renderAll() {
+                requests = getRequests();
+                renderStats();
+                renderRecentTable();
+                renderRequestCards();
+                populateReportClientSelect();
+                renderPackagesTable();
+            }
+
+            // Initial Bootstrap
+            if (typeof window.applyTranslations === 'function') {
+                window.applyTranslations();
+            }
+            updateLangButton();
+            renderAll();
+
+        })();
+    </script>
+</body>
+</html>

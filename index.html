@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AuraLife Energy Therapy - Holistic remote energy therapy for physical recovery, mental peace, prosperity, and long-distance family care.">
+    <title>AuraLife Energy Therapy | Holistic Remote Wellness</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Smooth transitions & helper polish */
+        .portal-btn {
+            background: rgba(15, 118, 110, 0.1);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 0.45rem 1rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: all 0.25s ease;
+        }
+        .portal-btn:hover {
+            background: var(--primary);
+            color: #ffffff;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+        .success-box {
+            display: none;
+            background: #dcfce7;
+            border: 1px solid #86efac;
+            color: #166534;
+            padding: 1.25rem;
+            border-radius: var(--radius-sm);
+            margin-top: 1.25rem;
+            text-align: center;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+        .success-box.show {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        .chakra-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+        .chakra-item {
+            cursor: pointer;
+        }
+        .family-fields {
+            background: var(--bg-light);
+            border: 1px dashed var(--border);
+            border-radius: var(--radius-sm);
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== HEADER & NAVIGATION ========== -->
+    <header class="header" id="header">
+        <div class="container">
+            <a href="#" class="logo">
+                <span class="logo-icon">✨</span>
+                <span data-i18n="nav_brand">AuraLife Energy Therapy</span>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#about" data-i18n="nav_about">About Energy</a></li>
+                <li><a href="#services" data-i18n="nav_services">Services</a></li>
+                <li><a href="#chakras" data-i18n="nav_chakras">Chakra Guide</a></li>
+                <li><a href="#book" class="btn btn-primary" data-i18n="nav_book">Book Session</a></li>
+                <li><a href="#report" data-i18n="nav_report">Sample Report</a></li>
+                <li><a href="admin.html" class="portal-btn" title="Energy Therapist Portal">🔐 Therapist Portal</a></li>
+                <li><button class="lang-toggle" id="langToggle" data-i18n="lang_toggle">தமிழ்</button></li>
+            </ul>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Slide-out Navigation -->
+    <div class="nav-mobile" id="navMobile">
+        <a href="#about" data-i18n="nav_about">About Energy</a>
+        <a href="#services" data-i18n="nav_services">Services</a>
+        <a href="#chakras" data-i18n="nav_chakras">Chakra Guide</a>
+        <a href="#book" data-i18n="nav_book">Book Session</a>
+        <a href="#report" data-i18n="nav_report">Sample Report</a>
+        <a href="admin.html" class="portal-btn">🔐 Therapist Portal</a>
+        <button class="lang-toggle" id="langToggleMobile" style="margin-top: 1rem;">தமிழ்</button>
+    </div>
+
+    <!-- ========== HERO SECTION ========== -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1 data-i18n="hero_title">Balance Your Energy Body for Better Health &amp; Better Life Mileage</h1>
+            <p data-i18n="hero_subtitle">Remote Energy Therapy by a Certified Energy Therapist for physical recovery, mental peace, prosperity, and long-distance family care.</p>
+            <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="#book" class="btn btn-primary" data-i18n="hero_cta">Request Energy Therapy</a>
+                <a href="#about" class="btn btn-secondary" data-i18n="nav_about">Learn About Energy</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 1: UNDERSTANDING ENERGY ANATOMY ========== -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 3rem;">
+                <h2 data-i18n="about_title">Understanding Your Energy Anatomy</h2>
+                <p style="color: var(--text-muted); max-width: 720px; margin: 0.5rem auto 0;" data-i18n="about_subtitle">True wellness begins when both your visible physical body and subtle energy body work in harmony.</p>
+            </div>
+
+            <div class="grid-3">
+                <div class="card">
+                    <span class="card-icon">🧬</span>
+                    <h3 class="card-title" data-i18n="about_physical_title">1. Physical &amp; Energy Bodies</h3>
+                    <p class="card-text" data-i18n="about_physical_text">Beyond our visible physical body exists a subtle Energy Body (Bioplasmic Body) that sustains vitality, cellular renewal, and organic function.</p>
+                </div>
+
+                <div class="card">
+                    <span class="card-icon">🌈</span>
+                    <h3 class="card-title" data-i18n="about_aura_title">2. The Aura (Energy Field)</h3>
+                    <p class="card-text" data-i18n="about_aura_text">Surrounding our physical body is a luminous field called the Aura. Stress and imbalances appear as congestion or depletion in the Aura before affecting the physical organs.</p>
+                </div>
+
+                <div class="card">
+                    <span class="card-icon">🔮</span>
+                    <h3 class="card-title" data-i18n="about_chakra_title">3. Energy Chakras (Energy Points)</h3>
+                    <p class="card-text" data-i18n="about_chakra_text">Within the Aura exist major energy centers known as Chakras. They absorb, digest, and distribute life force energy (Prana) to govern physical and emotional health.</p>
+                </div>
+            </div>
+
+            <!-- LIFE MILEAGE VEHICLE SERVICING BANNER -->
+            <div class="mileage-box">
+                <span class="mileage-icon">🚗</span>
+                <h3 style="font-size: 1.35rem; color: var(--primary-dark); margin-bottom: 0.65rem;" data-i18n="mileage_title">Why Regular Energy Servicing Gives "Better Life Mileage"</h3>
+                <p style="color: var(--text-dark); line-height: 1.8;" data-i18n="mileage_text">Just like you service your vehicle regularly to prevent breakdowns and ensure optimal mileage, cleansing and energizing your Aura periodically clears emotional congestion and delivers Better Life Mileage — keeping you energetic, focused, and resilient.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 2: SERVICES ========== -->
+    <section class="section" id="services" style="background: var(--bg-light);">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 3rem;">
+                <h2 data-i18n="services_title">Energy Therapy Services</h2>
+                <p style="color: var(--text-muted); max-width: 720px; margin: 0.5rem auto 0;" data-i18n="services_subtitle">Tailored remote energy therapy sessions (incorporating proven energy principles) for every stage of personal and family life.</p>
+            </div>
+
+            <div class="grid-3">
+                <div class="service-card">
+                    <span class="card-icon">💪</span>
+                    <h3 class="card-title" data-i18n="service_physical_title">Physical Wellness</h3>
+                    <p class="card-text" data-i18n="service_physical_text">Supportive energy therapy for ailments ranging from basic cough and pain to chronic heart, lung, and immune recovery.</p>
+                </div>
+
+                <div class="service-card">
+                    <span class="card-icon">🧠</span>
+                    <h3 class="card-title" data-i18n="service_mental_title">Mental &amp; Emotional Balance</h3>
+                    <p class="card-text" data-i18n="service_mental_text">Deep Aura cleansing for stress, anxiety, emotional trauma, hallucinations, and overcoming addictive patterns.</p>
+                </div>
+
+                <div class="service-card">
+                    <span class="card-icon">✨</span>
+                    <h3 class="card-title" data-i18n="service_prosperity_title">Prosperity &amp; Life Flow</h3>
+                    <p class="card-text" data-i18n="service_prosperity_text">Clearing energetic stagnation affecting career progress, financial flow, business profitability, and marriage delays.</p>
+                </div>
+
+                <div class="service-card">
+                    <span class="card-icon">👨‍👩‍👧‍👦</span>
+                    <h3 class="card-title" data-i18n="service_family_title">Remote Family Care</h3>
+                    <p class="card-text" data-i18n="service_family_text">Living away from home in another city or abroad? Dedicated remote healing sessions to keep your aging parents healthy and peaceful.</p>
+                </div>
+
+                <div class="service-card">
+                    <span class="card-icon">🚗</span>
+                    <h3 class="card-title" data-i18n="service_maintenance_title">Life Mileage Maintenance</h3>
+                    <p class="card-text" data-i18n="service_maintenance_text">Periodic energy tune-ups (monthly or quarterly) for healthy professionals and entrepreneurs to sustain peak vitality and immunity.</p>
+                </div>
+
+                <div class="service-card" style="border-left-color: var(--accent);">
+                    <span class="card-icon">🌐</span>
+                    <h3 class="card-title">100% Remote &amp; Distance Therapy</h3>
+                    <p class="card-text">Energy has no spatial boundaries. Receive verified energy therapy sessions comfortably from your home anywhere in India or across the globe.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 3: INTERACTIVE CHAKRA EXPLORER ========== -->
+    <section class="section" id="chakras">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 2.5rem;">
+                <h2 data-i18n="chakra_title">Energy Chakras &amp; Their Functions</h2>
+                <p style="color: var(--text-muted); max-width: 780px; margin: 0.5rem auto 0;" data-i18n="chakra_subtitle">Explore how each major energy point governs physical organs and emotional states. (Purely for educational awareness — your therapist assesses them for you).</p>
+            </div>
+
+            <div class="chakra-container">
+                <ul class="chakra-list" id="chakraList" style="list-style: none;">
+                    <!-- Rendered by app.js -->
+                </ul>
+                <div class="chakra-details" id="chakraDetails">
+                    <!-- Rendered by app.js -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 4: SMART BOOKING FORM ========== -->
+    <section class="section" id="book" style="background: var(--bg-light);">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 2.5rem;">
+                <h2 data-i18n="book_title">Request an Energy Therapy Session</h2>
+                <p style="color: var(--text-muted); max-width: 680px; margin: 0.5rem auto 0;" data-i18n="book_subtitle">No technical knowledge needed. Simply describe your concern in English or Tamil, and our Energy Therapist will connect with you.</p>
+            </div>
+
+            <div class="form-container">
+                <form id="bookingForm" novalidate>
+                    <!-- Booking For Option -->
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="book_for_label">Booking For</label>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="bookingFor" value="self" checked>
+                                <span data-i18n="book_for_self">Myself</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="bookingFor" value="family">
+                                <span data-i18n="book_for_family">Parents / Family (Remote)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Remote Family Additional Details -->
+                    <div class="family-fields" id="familyFields" style="display: none;">
+                        <h4 style="margin-bottom: 0.75rem; color: var(--primary); font-size: 0.95rem;">Family Recipient Information</h4>
+                        <div class="form-row">
+                            <div class="form-group" style="margin-bottom: 0.75rem;">
+                                <label for="familyName" data-i18n="book_family_name">Family Member Name</label>
+                                <input type="text" id="familyName" name="familyName" placeholder="Family member's full name" data-i18n-placeholder="book_family_name_placeholder">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0.75rem;">
+                                <label for="familyAge" data-i18n="book_family_age">Age</label>
+                                <input type="number" id="familyAge" name="familyAge" placeholder="e.g. 68" min="1" max="120">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0.75rem;">
+                                <label for="familyRelation" data-i18n="book_family_relation">Relationship</label>
+                                <input type="text" id="familyRelation" name="familyRelation" placeholder="e.g. Father, Mother, Spouse">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Client Personal Details -->
+                    <div class="form-group">
+                        <label for="clientName" data-i18n="book_name">Your Name *</label>
+                        <input type="text" id="clientName" name="clientName" required placeholder="Enter your full name" data-i18n-placeholder="book_name_placeholder">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="clientPhone" data-i18n="book_phone">Phone / WhatsApp *</label>
+                            <input type="tel" id="clientPhone" name="clientPhone" required placeholder="Your WhatsApp or mobile number" data-i18n-placeholder="book_phone_placeholder">
+                        </div>
+                        <div class="form-group">
+                            <label for="clientEmail" data-i18n="book_email">Email Address</label>
+                            <input type="email" id="clientEmail" name="clientEmail" placeholder="Your email address (optional)" data-i18n-placeholder="book_email_placeholder">
+                        </div>
+                    </div>
+
+                    <!-- Plan Selection -->
+                    <div class="form-group">
+                        <label for="therapyPlan" data-i18n="book_plan">Select Therapy Plan *</label>
+                        <select id="therapyPlan" name="therapyPlan" required>
+                            <option value="Single Consultation" data-i18n="book_plan_single">Single Consultation &amp; Trial Session</option>
+                            <option value="Physical Wellness" data-i18n="book_plan_physical">Physical Wellness Plan</option>
+                            <option value="Mental & Emotional Balance" data-i18n="book_plan_mental">Mental &amp; Emotional Balance Plan</option>
+                            <option value="Prosperity & Career Flow" data-i18n="book_plan_prosperity">Prosperity &amp; Career Flow Plan</option>
+                            <option value="Remote Family Care" data-i18n="book_plan_family">Remote Family Care Package (Parents)</option>
+                            <option value="Life Mileage Maintenance" data-i18n="book_plan_maintenance">Life Mileage Maintenance (Periodic Tune-up)</option>
+                        </select>
+                    </div>
+
+                    <!-- Concern in English or Tamil -->
+                    <div class="form-group">
+                        <label for="clientConcern" data-i18n="book_concern">Describe Your Concern or Goal (English or Tamil) *</label>
+                        <textarea id="clientConcern" name="clientConcern" rows="4" required placeholder="Describe symptoms, concerns, or goals in your own words (English or Tamil input accepted)..." data-i18n-placeholder="book_concern_placeholder"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.05rem;" data-i18n="book_submit">Submit Therapy Request</button>
+
+                    <div class="success-box" id="bookingSuccess">
+                        <p data-i18n="book_success">Thank you! Your request has been sent to the Energy Therapist's dashboard. We will contact you shortly.</p>
+                        <div style="margin-top: 0.75rem;">
+                            <a href="admin.html" class="portal-btn" style="background:#ffffff; color:#166534; border-color:#86efac;">Open Therapist Admin Panel to View</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SECTION 5: SAMPLE REPORT & FEEDBACK ========== -->
+    <section class="section" id="report">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 2.5rem;">
+                <h2 data-i18n="report_title">Sample Progress Report (Before vs. After Therapy)</h2>
+                <p style="color: var(--text-muted); max-width: 720px; margin: 0.5rem auto 0;" data-i18n="report_subtitle">After completing sessions, your Energy Therapist provides a transparent visual progress report showing your Aura &amp; Chakra improvements.</p>
+            </div>
+
+            <div class="report-card" style="max-width: 850px; margin: 0 auto;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
+                    <div>
+                        <strong data-i18n="report_client">Client:</strong> <span>Karthik R.</span>
+                    </div>
+                    <div>
+                        <strong data-i18n="report_plan">Plan:</strong> <span data-i18n="report_plan_detail">Stress &amp; Life Mileage (5 Sessions)</span>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-i18n="report_col_center">Energy Center / Field</th>
+                                <th data-i18n="report_col_before">Before Therapy</th>
+                                <th data-i18n="report_col_after">After Therapy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong data-i18n="report_aura">Overall Aura Field</strong></td>
+                                <td><span class="badge-before" data-i18n="report_aura_before">Congested &amp; Dull</span></td>
+                                <td><span class="badge-after" data-i18n="report_aura_after">Clean, Bright &amp; Balanced</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong data-i18n="report_solar">Solar Plexus Chakra</strong></td>
+                                <td><span class="badge-before" data-i18n="report_solar_before">Over-activated (Stress &amp; Acidity)</span></td>
+                                <td><span class="badge-after" data-i18n="report_solar_after">Calm &amp; Harmonized</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong data-i18n="report_basic">Basic Chakra</strong></td>
+                                <td><span class="badge-before" data-i18n="report_basic_before">Depleted (Low Stamina)</span></td>
+                                <td><span class="badge-after" data-i18n="report_basic_after">Energized &amp; Vital</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong data-i18n="report_heart">Heart Chakra</strong></td>
+                                <td><span class="badge-before" data-i18n="report_heart_before">Constricted &amp; Anxious</span></td>
+                                <td><span class="badge-after" data-i18n="report_heart_after">Open, Light &amp; Peaceful</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Client Feedback Box -->
+                <div style="margin-top: 2rem; background: var(--bg-light); border-radius: var(--radius-sm); padding: 1.5rem; border: 1px solid var(--border);">
+                    <form id="feedbackForm">
+                        <label for="reportFeedback" style="display: block; font-weight: 600; margin-bottom: 0.5rem;" data-i18n="report_feedback_label">Client Feedback (English or Tamil)</label>
+                        <textarea id="reportFeedback" rows="3" style="width: 100%; padding: 0.8rem; border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 1rem;" placeholder="Share your recovery and improvements after the sessions..." data-i18n-placeholder="report_feedback_placeholder"></textarea>
+                        <button type="submit" class="btn btn-primary" data-i18n="report_feedback_submit">Submit Feedback</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo" style="color:#ffffff;">
+                        <span class="logo-icon">✨</span>
+                        <span>AuraLife Energy Therapy</span>
+                    </a>
+                    <p style="margin-top: 0.75rem;" data-i18n="footer_tagline">Restoring balance, vitality, and peace across any distance.</p>
+                    <div style="margin-top: 1rem;">
+                        <a href="admin.html" class="portal-btn" style="color:#ffffff; border-color:rgba(255,255,255,0.4);">🔐 Energy Therapist Login</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4 data-i18n="footer_quick_links">Quick Links</h4>
+                    <ul style="list-style: none;">
+                        <li><a href="#about" data-i18n="nav_about">About Energy</a></li>
+                        <li><a href="#services" data-i18n="nav_services">Services</a></li>
+                        <li><a href="#chakras" data-i18n="nav_chakras">Chakra Guide</a></li>
+                        <li><a href="#book" data-i18n="nav_book">Book Session</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 data-i18n="footer_services">Services</h4>
+                    <ul style="list-style: none;">
+                        <li><a href="#services" data-i18n="service_physical_title">Physical Wellness</a></li>
+                        <li><a href="#services" data-i18n="service_mental_title">Mental &amp; Emotional Balance</a></li>
+                        <li><a href="#services" data-i18n="service_prosperity_title">Prosperity &amp; Life Flow</a></li>
+                        <li><a href="#services" data-i18n="service_family_title">Remote Family Care</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 data-i18n="footer_contact">Contact &amp; Support</h4>
+                    <ul style="list-style: none; color: rgba(255,255,255,0.7); font-size: 0.9rem;">
+                        <li style="margin-bottom: 0.5rem;">💬 WhatsApp: +91 98765 43210</li>
+                        <li style="margin-bottom: 0.5rem;">📧 info@auralifeenergy.com</li>
+                        <li style="margin-bottom: 0.5rem;">📍 Chennai, Tamil Nadu, India</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p data-i18n="footer_copyright">© 2026 AuraLife Energy Therapy. Holistic Remote Wellness &amp; Life Mileage Care.</p>
+                <p class="disclaimer" data-i18n="footer_disclaimer">Disclaimer: Energy Therapy is a complementary holistic modality and is not intended to replace licensed medical diagnosis or medical treatment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/i18n.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
